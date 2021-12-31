@@ -132,11 +132,17 @@ world-border:
     # (ex: if countdown-start = 60 and countdown-end = 30, once the border starts, the border will shrink to the centre in 30 seconds)
     # (ex: if countdown-start = 60 and countdown-end = 55, once the border starts, the border will shrink to the centre in 5 seconds)
     countdown-end: 30
-    # Final border size from the centre outward
+    # Final world border width
     final-border-size: 30
     # If true, the centre of the arena will be based on the first spawn location you set
     # If false, the centre will be calculated by the centre of the arena
     center-on-first-spawn: true
+    # If true the border center will be offset randomly within a set distance from the set border center
+    random-offset: false
+    # The minimum distance away from arena center to set the center of the closing world border
+    random-min-distance: 0
+    # The maximum distance away from arena center to set the center of the closing world border
+    random-max-distance: 128
 ## SPECTATE
 # When enabled players can spectate games without interfering with players in the game
 spectate:

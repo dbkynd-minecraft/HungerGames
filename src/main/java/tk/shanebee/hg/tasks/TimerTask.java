@@ -1,6 +1,7 @@
 package tk.shanebee.hg.tasks;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import tk.shanebee.hg.data.Config;
 import tk.shanebee.hg.data.Language;
 import tk.shanebee.hg.game.Game;
@@ -51,8 +52,10 @@ public class TimerTask implements Runnable {
 
 		if (Config.borderEnabled && remainingtime == borderCountdownStart) {
 			int closingIn = remainingtime - borderCountdownEnd;
-			game.getGameBorderData().setBorder(closingIn);
-			game.getGamePlayerData().msgAll(lang.game_border_closing.replace("<seconds>", String.valueOf(closingIn)));
+			Location center = game.getGameBorderData().setBorder(closingIn);
+			game.getGamePlayerData().msgAll(HG.getPlugin().getLang().game_border_closing
+					.replace("<seconds>", String.valueOf(closingIn))
+					.replace("<position>", "x:" + center.getBlockX() + " z:" + center.getBlockZ()));
 		}
 
 		if (gameArenaData.getChestRefillTime() > 0 && remainingtime == gameArenaData.getChestRefillTime()) {

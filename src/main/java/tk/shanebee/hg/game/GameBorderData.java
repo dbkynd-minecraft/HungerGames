@@ -63,7 +63,7 @@ public class GameBorderData extends Data {
         return Arrays.asList(borderCountdownStart, borderCountdownEnd);
     }
 
-    public void setBorder(int time) {
+    public Location setBorder(int time) {
         Location center;
         if (Config.centerSpawn && borderCenter == null) {
             center = game.gameArenaData.spawns.get(0);
@@ -72,6 +72,27 @@ public class GameBorderData extends Data {
         } else {
             center = game.gameArenaData.bound.getCenter();
         }
+
+        if (Config.borderRandomOffset) {
+            // Get the center of the arena
+            Location arenaCenter = game.gameArenaData.bound.getCenter();
+            // Use the center to determine the shortest side if a rectangle
+            // So we make sure the random point is within it
+            double shortestDistance = getBorderShortestSide(arenaCenter);
+            // Offset by half the final border size so the edge is inside the bounds
+            double padding = Math.abs(Config.borderFinalSize / 2);
+            double areaRadius = shortestDistance - padding;
+            // Use the config radius but only if smaller than the arena
+            double maxRadius = Math.min(areaRadius, Config.borderRandomMaxDistance - padding);
+            double minRadius = Config.borderRandomMinDistance;
+            if (minRadius >= maxRadius) minRadius = 0;
+            double t = Math.random() * Math.PI;
+            double radius = Math.random() * (maxRadius - minRadius) + minRadius;
+            double x = Math.cos(t) * radius;
+            double z = Math.sin(t) * radius;
+            center = new Location(game.gameArenaData.bound.getWorld(), x, 0, z);
+        }
+
         World world = center.getWorld();
         assert world != null;
         WorldBorder border = world.getWorldBorder();
@@ -82,12 +103,27 @@ public class GameBorderData extends Data {
         border.setWarningTime(5);
         border.setDamageBuffer(2);
         border.setSize(Math.min(size, borderSize), time);
+
+        return center;
     }
 
     void resetBorder() {
         World world = game.gameArenaData.getBound().getWorld();
         assert world != null;
         world.getWorldBorder().reset();
+    }
+
+    private double getBorderShortestSide(Location center) {
+        Bound bound = game.gameArenaData.bound;
+        double x1 = Math.abs(bound.getGreaterCorner().getX() - center.getX());
+        double x2 = Math.abs(bound.getLesserCorner().getX() - center.getX());
+        double z1 = Math.abs(bound.getGreaterCorner().getZ() - center.getZ());
+        double z2 = Math.abs(bound.getLesserCorner().getZ() - center.getZ());
+
+        double x = Math.min(x1, x2);
+        double z = Math.min(z1, z2);
+
+        return Math.min(x, z);
     }
 
 }
