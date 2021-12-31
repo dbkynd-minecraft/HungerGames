@@ -64,6 +64,7 @@ public class Config {
     public static boolean randomChest;
     public static int randomChestInterval;
     public static int randomChestMaxContent;
+    public static int randomChestMaxHeight;
 
     //World border
     public static boolean borderEnabled;
@@ -153,6 +154,7 @@ public class Config {
         randomChest = config.getBoolean("random-chest.enabled");
         randomChestInterval = config.getInt("random-chest.interval") * 20;
         randomChestMaxContent = config.getInt("random-chest.max-chestcontent");
+        randomChestMaxHeight = config.getInt("random-chest.max-height");
         teleportEnd = config.getBoolean("settings.teleport-at-end");
         teleportEndTime = config.getInt("settings.teleport-at-end-time");
 

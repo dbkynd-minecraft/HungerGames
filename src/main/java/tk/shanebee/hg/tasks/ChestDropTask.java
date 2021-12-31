@@ -30,23 +30,34 @@ public class ChestDropTask implements Runnable {
 
     public void run() {
         Bound bound = game.getGameArenaData().getBound();
+        int maxHeight = Math.min((int) bound.getGreaterCorner().getY(), Config.randomChestMaxHeight);
         Integer[] i = bound.getRandomLocs();
 
         int x = i[0];
-        int y = i[1];
+        int y = 0;
         int z = i[2];
         World w = bound.getWorld();
 
-        while (w.getBlockAt(x, y, z).getType() == Material.AIR) {
-            y--;
+        boolean locAccepted = false;
 
-            if (y <= 0) {
+        outer:
+        while (!locAccepted) {
+            y++;
+
+            if (y > maxHeight) {
                 i = bound.getRandomLocs();
 
                 x = i[0];
-                y = i[1];
+                y = 0;
                 z = i[2];
             }
+
+            for (int j = 0; j <= 10; j++) {
+                if (w.getBlockAt(x, y + j, z).getType() != Material.AIR) {
+                    continue outer;
+                }
+            }
+            locAccepted = true;
         }
 
         y = y + 10;
@@ -63,7 +74,7 @@ public class ChestDropTask implements Runnable {
                 Util.scm(p, HG.getPlugin().getLang().chest_drop_1);
                 Util.scm(p, HG.getPlugin().getLang().chest_drop_2
                         .replace("<x>", String.valueOf(x))
-                        .replace("<y>", String.valueOf(y))
+                        .replace("<y>", String.valueOf(y - 10))
                         .replace("<z>", String.valueOf(z)));
                 Util.scm(p, HG.getPlugin().getLang().chest_drop_1);
             }
