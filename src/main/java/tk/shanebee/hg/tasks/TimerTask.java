@@ -53,6 +53,29 @@ public class TimerTask implements Runnable {
 		if (Config.borderEnabled && remainingtime == borderCountdownStart) {
 			int closingIn = remainingtime - borderCountdownEnd;
 			Location center = game.getGameBorderData().setBorder(closingIn);
+
+			if (Config.overtime) {
+				// Message that the boarder will be collapsing
+				Bukkit.getScheduler().scheduleSyncDelayedTask(HG.getPlugin(), new Runnable() {
+					@Override
+					public void run() {
+						if (game.getGameArenaData().getStatus() == Status.RUNNING) {
+							String game_border_closed = HG.getPlugin().getLang().game_border_closed;
+							String game_border_closed_replacement;
+							if (game_border_closed.contains("<minutes")) {
+								double minutes = (double) borderCountdownEnd / 60.0;
+								game_border_closed_replacement = game_border_closed
+										.replace("<minutes>", String.valueOf(minutes));
+							} else {
+								game_border_closed_replacement = game_border_closed
+										.replace("<seconds>", String.valueOf(borderCountdownEnd));
+							}
+							game.getGamePlayerData().msgAll(game_border_closed_replacement);
+						}
+					}
+				}, closingIn * 20L);
+			}
+
 			String game_border_closing = HG.getPlugin().getLang().game_border_closing;
 			String game_border_closing_replacement;
 			if (game_border_closing.contains("<minutes")) {
@@ -81,9 +104,27 @@ public class TimerTask implements Runnable {
 		if (remainingtime == teleportTimer && Config.teleportEnd) {
 			game.getGamePlayerData().msgAll(lang.game_almost_over);
 			game.getGamePlayerData().respawnAll();
-		} else if (this.remainingtime < 10) {
-			stop();
-			game.stop(false);
+		} else if (this.remainingtime < 10) { // End of normal play
+			if (Config.borderEnabled && Config.overtime) {
+				// Stop the current timer task
+				stop();
+				game.getGamePlayerData().msgAll(HG.getPlugin().getLang().game_border_overtime.replace("<seconds>", String.valueOf(Config.overtimeSeconds)));
+				// Show overtime bossbar even if not using bossbar for normal gameplay
+				game.getGameBarData().bossBarOvertime();
+				// Close the border to 0 width
+				game.getGameBorderData().closeBorder();
+				// Stop the game with no deaths if the overtime runs 60 seconds over the overtime-seconds
+				// This is a catch in case something unexpected happens and there is no winner
+				Bukkit.getScheduler().scheduleSyncDelayedTask(HG.getPlugin(), new Runnable() {
+					@Override
+					public void run() {
+						if (game.getGameArenaData().getStatus() == Status.RUNNING) game.stop(false);
+					}
+				}, (60 + Config.overtimeSeconds) * 20L);
+			} else {
+				stop();
+				game.stop(false);
+			}
 		} else {
 			if (!Config.bossbar) {
 				int minutes = this.remainingtime / 60;

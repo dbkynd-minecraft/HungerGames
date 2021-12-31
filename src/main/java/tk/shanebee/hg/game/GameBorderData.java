@@ -126,4 +126,12 @@ public class GameBorderData extends Data {
         return Math.min(x, z);
     }
 
+    public void closeBorder() {
+        Location center = game.gameArenaData.spawns.get(0);
+        World world = center.getWorld();
+        assert world != null;
+        WorldBorder border = world.getWorldBorder();
+        border.setSize(0, Config.overtimeSeconds);
+    }
+
 }

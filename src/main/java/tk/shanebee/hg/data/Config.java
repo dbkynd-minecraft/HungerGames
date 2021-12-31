@@ -70,11 +70,13 @@ public class Config {
     public static boolean borderOnStart;
     public static boolean centerSpawn;
     public static boolean borderRandomOffset;
+    public static boolean overtime;
     public static int borderCountdownStart;
     public static int borderCountdownEnd;
     public static int borderFinalSize;
     public static int borderRandomMinDistance;
     public static int borderRandomMaxDistance;
+    public static int overtimeSeconds;
 
     //Spectate
     public static boolean spectateEnabled;
@@ -158,11 +160,13 @@ public class Config {
         borderOnStart = config.getBoolean("world-border.initiate-on-start");
         centerSpawn = config.getBoolean("world-border.center-on-first-spawn");
         borderRandomOffset = config.getBoolean("world-border.random-offset");
+        overtime = config.getBoolean("world-border.overtime");
         borderCountdownStart = config.getInt("world-border.countdown-start");
         borderCountdownEnd = config.getInt("world-border.countdown-end");
         borderFinalSize = config.getInt("world-border.final-border-size");
         borderRandomMinDistance = config.getInt("world-border.random-min-distance");
         borderRandomMaxDistance = config.getInt("world-border.random-max-distance");
+        overtimeSeconds = config.getInt("world-border.overtime-seconds");
 
         spectateEnabled = config.getBoolean("spectate.enabled");
         spectateOnDeath = config.getBoolean("spectate.death-to-spectate");

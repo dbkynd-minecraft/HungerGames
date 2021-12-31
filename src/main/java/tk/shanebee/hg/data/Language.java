@@ -29,12 +29,15 @@ public class Language {
     public String game_ending_min;
     public String game_ending_sec;
     public String game_border_closing;
+    public String game_border_closed;
+    public String game_border_overtime;
     public String game_chest_refill;
     public String players_to_start;
     public String arena_not_ready;
     public String arena_spectate;
     public String game_full;
     public String player_won;
+    public String no_winners;
     public String winning_amount;
     public String kit_join_header;
     public String kit_join_footer;
@@ -166,6 +169,7 @@ public class Language {
     public String track_new2;
     public String listener_sign_click_hand;
     public String bossbar;
+    public String bossbar_overtime;
     public String lb_blank_space;
     public String lb_combined_separator;
     public String lb_missing_player;
@@ -246,12 +250,15 @@ public class Language {
         game_ending_min = lang.getString("game-ending-min");
         game_ending_sec = lang.getString("game-ending-sec");
         game_border_closing = lang.getString("game-border-closing");
+        game_border_closed = lang.getString("game-border-closed");
+        game_border_overtime = lang.getString("game-border-overtime");
 
         players_to_start = lang.getString("players-to-start");
         arena_not_ready = lang.getString("arena-not-ready");
         arena_spectate = lang.getString("arena-spectate");
         game_full = lang.getString("game-full");
         player_won = lang.getString("player-won");
+        no_winners = lang.getString("no-winners");
 
         kit_join_header = lang.getString("kit-join-header");
         kit_join_footer = lang.getString("kit-join-footer");
@@ -375,6 +382,7 @@ public class Language {
         listener_wand_set_pos_2 = lang.getString("listener-wand-set-pos-2");
         listener_wand_big_enough = lang.getString("listener-wand-big-enough");
         bossbar = lang.getString("game-bossbar");
+        bossbar_overtime = lang.getString("game-bossbar-overtime");
 
         game_chest_refill = lang.getString("game-chests-refill");
         cmd_chest_refill = lang.getString("cmd-chestrefill-set");

@@ -21,10 +21,13 @@ game-ending-minsec: '&aThe game is ending in <minutes> minute(s), and <seconds> 
 game-ending-min: '&aThe game is ending in <minutes> minute(s)!'
 game-ending-sec: '&athe game is ending in <seconds> second(s)!'
 game-border-closing: '&6The border is coming, you have <seconds> seconds to get to the center of the arena!'
+game-border-closed: '&6The border will start to collapse in <seconds> seconds.'
+game-border-overtime: '&6The border is collapsing, you have <seconds> seconds until you are crushed.'
 game-chests-refill: '&6Chests have been refilled'
 
 # <min>/<sec> will be replaced with the remaining minutes and seconds in a game
 game-bossbar: '&6&lGame Ends In: &b&l<min> &7min &b&l<sec> &7sec'
+game-bossbar-overtime: '&c&lOVERTIME'
 
 #  <amount> will be replaced with amount of players left to start a game
 players-to-start: '&b&l<amount> &6players to start!'
@@ -35,6 +38,7 @@ game-full: '&cis currently full!'
 #  <arena> will be replaced with name of arena the player won in
 #  <winner> will be replaced with name of winner
 player-won: '&b&l<winner> &6won HungerGames at arena &b&l<arena>&7!'
+no-winners: 'There were no winners.'
 
 #  <amount> will be replaced with the amount the player will receive on win
 winning-amount: '&7You received &b$<amount> &7for winning &3&lHunger&b&lGames!'

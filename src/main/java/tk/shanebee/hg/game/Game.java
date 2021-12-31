@@ -342,6 +342,13 @@ public class Game {
                 plugin.getLeaderboard().addStat(u, Leaderboard.Stats.WINS);
                 plugin.getLeaderboard().addStat(u, Leaderboard.Stats.GAMES);
             }
+        } else {
+            String broadcast = lang.no_winners;
+            if (Config.broadcastWinMessages) {
+                Util.broadcast(broadcast);
+            } else {
+                gamePlayerData.msgAllPlayers(broadcast);
+            }
         }
         gameBlockData.clearChests();
         String winner = Util.translateStop(Util.convertUUIDListToStringList(win));

@@ -143,6 +143,10 @@ world-border:
     random-min-distance: 0
     # The maximum distance away from arena center to set the center of the closing world border
     random-max-distance: 128
+    # If enabled overtime will move the world boarder to 0 radius and force a winner
+    overtime: false
+    # The time in seconds that overtime takes to move the world-border from the final-border-size to 0
+    overtime-seconds: 30
 ## SPECTATE
 # When enabled players can spectate games without interfering with players in the game
 spectate:

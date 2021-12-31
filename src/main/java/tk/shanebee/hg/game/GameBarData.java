@@ -33,16 +33,7 @@ public class GameBarData extends Data {
         int sec = (time % 60);
         String title = this.title.replace("<min>", String.valueOf(min)).replace("<sec>", String.valueOf(sec));
         bar = Bukkit.createBossBar(Util.getColString(title), BarColor.GREEN, BarStyle.SEGMENTED_20);
-        for (UUID uuid : getGame().getGamePlayerData().getPlayers()) {
-            Player player = Bukkit.getPlayer(uuid);
-            assert player != null;
-            bar.addPlayer(player);
-        }
-        for (UUID uuid : getGame().getGamePlayerData().getSpectators()) {
-            Player player = Bukkit.getPlayer(uuid);
-            assert player != null;
-            bar.addPlayer(player);
-        }
+        displayBossBar();
     }
 
     /**
@@ -107,6 +98,32 @@ public class GameBarData extends Data {
      */
     public BossBar getBossBar() {
         return this.bar;
+    }
+
+    public void bossBarOvertime() {
+        String title = HG.getPlugin().getLang().bossbar_overtime;
+        if (bar == null) {
+            bar = Bukkit.createBossBar(Util.getColString(title), BarColor.RED, BarStyle.SOLID);
+            displayBossBar();
+        } else {
+            bar.setTitle(Util.getColString(title));
+            bar.setStyle(BarStyle.SOLID);
+            bar.setColor(BarColor.RED);
+        }
+        bar.setProgress(1.0);
+    }
+
+    private void displayBossBar() {
+        for (UUID uuid : getGame().getGamePlayerData().getPlayers()) {
+            Player player = Bukkit.getPlayer(uuid);
+            assert player != null;
+            bar.addPlayer(player);
+        }
+        for (UUID uuid : getGame().getGamePlayerData().getSpectators()) {
+            Player player = Bukkit.getPlayer(uuid);
+            assert player != null;
+            bar.addPlayer(player);
+        }
     }
 
 }
