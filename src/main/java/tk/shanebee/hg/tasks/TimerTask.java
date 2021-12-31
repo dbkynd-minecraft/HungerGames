@@ -46,15 +46,24 @@ public class TimerTask implements Runnable {
 	public void run() {
 		GameArenaData gameArenaData = game.getGameArenaData();
 		if (game == null || gameArenaData.getStatus() != Status.RUNNING) stop(); //A quick null check!
-		
+
 
 		if (Config.bossbar) game.getGameBarData().bossbarUpdate(remainingtime);
 
 		if (Config.borderEnabled && remainingtime == borderCountdownStart) {
 			int closingIn = remainingtime - borderCountdownEnd;
 			Location center = game.getGameBorderData().setBorder(closingIn);
-			game.getGamePlayerData().msgAll(HG.getPlugin().getLang().game_border_closing
-					.replace("<seconds>", String.valueOf(closingIn))
+			String game_border_closing = HG.getPlugin().getLang().game_border_closing;
+			String game_border_closing_replacement;
+			if (game_border_closing.contains("<minutes")) {
+				double minutes = (double) closingIn / 60.0;
+				game_border_closing_replacement = game_border_closing
+						.replace("<minutes>", String.valueOf(minutes));
+			} else {
+				game_border_closing_replacement = game_border_closing
+						.replace("<seconds>", String.valueOf(closingIn));
+			}
+			game.getGamePlayerData().msgAll(game_border_closing_replacement
 					.replace("<position>", "x:" + center.getBlockX() + " z:" + center.getBlockZ()));
 		}
 
