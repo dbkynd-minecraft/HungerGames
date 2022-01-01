@@ -121,14 +121,19 @@ public class Board {
         Language lang = plugin.getLang();
         String alive = "  " + lang.players_alive_num.replace("<num>", String.valueOf(game.getGamePlayerData().getPlayers().size()));
 
+        int pos = 1;
+        setLine(pos++, " ");
+        setLine(pos++, alive);
+        setLine(pos++, lang.players_alive);
+        setLine(pos++, " ");
+
+        if (!Config.hideArenaNameScoreboard) {
+            setLine(pos++, "  &e" + game.getGameArenaData().getName());
+            setLine(pos++, lang.scoreboard_arena);
+            setLine(pos++, " ");
+        }
+
         setTitle(lang.scoreboard_title);
-        setLine(15, " ");
-        setLine(14, lang.scoreboard_arena);
-        setLine(13, "  &e" + game.getGameArenaData().getName());
-        setLine(12, " ");
-        setLine(11, lang.players_alive);
-        setLine(10, alive);
-        setLine(9, " ");
     }
 
     @Override
