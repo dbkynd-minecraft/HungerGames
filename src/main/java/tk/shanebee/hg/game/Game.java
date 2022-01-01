@@ -188,6 +188,10 @@ public class Game {
         return this.starting;
     }
 
+    public ChestDropTask getChestDropTask() {
+        return this.chestDrop;
+    }
+
     /**
      * Get the location of the lobby for this game
      *

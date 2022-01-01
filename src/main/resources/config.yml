@@ -93,6 +93,7 @@ random-chest:
     max-height: 128
     border-padding: 16
     no-explosion: false
+    stop-on-wb-countdown-end: true
 rollback:
     # Let players break blocks in the arena, and restore when the game is done
     allow-block-break: false

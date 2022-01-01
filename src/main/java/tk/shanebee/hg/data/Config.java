@@ -64,6 +64,7 @@ public class Config {
     //Random chest
     public static boolean randomChest;
     public static boolean randomChestNoExplosion;
+    public static boolean randomChestStopOnWbCountdownEnd;
     public static int randomChestInterval;
     public static int randomChestMinContent;
     public static int randomChestMaxContent;
@@ -158,6 +159,7 @@ public class Config {
 
         randomChest = config.getBoolean("random-chest.enabled");
         randomChestNoExplosion = config.getBoolean("random-chest.no-explosion");
+        randomChestStopOnWbCountdownEnd = config.getBoolean("random-chest.stop-on-wb-countdown-end");
         randomChestInterval = config.getInt("random-chest.interval") * 20;
         randomChestMinContent = config.getInt("random-chest.min-chestcontent");
         randomChestMaxContent = config.getInt("random-chest.max-chestcontent");

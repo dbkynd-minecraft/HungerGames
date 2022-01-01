@@ -1,6 +1,5 @@
 package tk.shanebee.hg.tasks;
 
-import jdk.javadoc.internal.doclint.HtmlTag;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -25,6 +24,7 @@ public class ChestDropTask implements Runnable {
     private final Game game;
     private final int timerID;
     private final List<ChestDrop> chests = new ArrayList<>();
+    private boolean halted = false;
 
     public ChestDropTask(Game game) {
         this.game = game;
@@ -32,8 +32,7 @@ public class ChestDropTask implements Runnable {
     }
 
     public void run() {
-        // int borderCountdownEnd = game.getGameBorderData().getBorderTimer().get(1);
-
+        if (halted) return;
 
         World world = game.getGameArenaData().getSpawns().get(0).getWorld();
         WorldBorder border = world.getWorldBorder();
@@ -120,6 +119,10 @@ public class ChestDropTask implements Runnable {
                 Util.scm(p, HG.getPlugin().getLang().chest_drop_1);
             }
         }
+    }
+
+    public void halt() {
+        halted = true;
     }
 
     public void shutdown() {

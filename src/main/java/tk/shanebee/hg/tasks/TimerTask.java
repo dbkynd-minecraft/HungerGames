@@ -55,10 +55,13 @@ public class TimerTask implements Runnable {
 			Location center = game.getGameBorderData().setBorder(closingIn);
 
 			if (Config.overtime) {
-				// Message that the boarder will be collapsing
+				// Message that the border will be collapsing
 				Bukkit.getScheduler().scheduleSyncDelayedTask(HG.getPlugin(), new Runnable() {
 					@Override
 					public void run() {
+						if (Config.randomChest || Config.randomChestStopOnWbCountdownEnd) {
+							game.getChestDropTask().halt();
+						}
 						if (game.getGameArenaData().getStatus() == Status.RUNNING) {
 							String game_border_closed = HG.getPlugin().getLang().game_border_closed;
 							String game_border_closed_replacement;
