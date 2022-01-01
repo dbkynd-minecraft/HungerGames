@@ -2,6 +2,8 @@ package tk.shanebee.hg.game;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.WorldBorder;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import tk.shanebee.hg.HG;
@@ -257,6 +259,21 @@ public class Game {
         gameBlockData.updateLobbyBlock();
         if (Config.bossbar) {
             bar.createBossbar(gameArenaData.timer);
+        }
+        if (Config.borderEnabled) {
+            Location center = this.getGameArenaData().getBound().getCenter();
+            World world = center.getWorld();
+            WorldBorder border = world.getWorldBorder();
+            Bound bound = this.getGameArenaData().getBound();
+
+            double x1 = center.distance(new Location(world, bound.getLesserCorner().getX(), center.getY(), center.getZ()));
+            double x2 = center.distance(new Location(world, bound.getGreaterCorner().getX(), center.getY(), center.getZ()));
+            double z1 = center.distance(new Location(world, center.getX(), center.getY(), bound.getLesserCorner().getZ()));
+            double z2 = center.distance(new Location(world, center.getX(), center.getY(), bound.getGreaterCorner().getZ()));
+            double size = Math.max(x1 + x2, z1 + z2);
+
+            border.setCenter(bound.getCenter());
+            border.setSize(size);
         }
         if (Config.borderEnabled && Config.borderOnStart) {
             gameBorderData.setBorder(gameArenaData.timer);

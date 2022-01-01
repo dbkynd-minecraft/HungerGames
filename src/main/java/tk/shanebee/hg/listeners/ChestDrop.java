@@ -90,7 +90,11 @@ public class ChestDrop implements Listener {
             if (p.equals(invopener)) {
                 Location l = beforeBlock.getLocation();
                 assert l.getWorld() != null;
-                l.getWorld().createExplosion(l.getBlockX(), l.getBlockY(), l.getBlockZ(), 1, false, false);
+                if (!Config.randomChestNoExplosion) {
+                    l.getWorld().createExplosion(l.getBlockX(), l.getBlockY(), l.getBlockZ(), 1, false, false);
+                } else {
+                    l.getWorld().playSound(l, Sound.ENTITY_ENDERMAN_TELEPORT, 1, 1);
+                }
                 remove();
                 return;
             }
@@ -108,7 +112,10 @@ public class ChestDrop implements Listener {
 
             Inventory i = Bukkit.getServer().createInventory(player, 54);
             i.clear();
-            int c = rg.nextInt(Config.randomChestMaxContent) + 1;
+            int low = Config.randomChestMinContent;
+            int high = Config.randomChestMaxContent;
+            if (high < low) high = low;
+            int c = rg.nextInt(high + 1 - low) + low;
             while (c != 0) {
                 ItemStack it = HG.getPlugin().getManager().randomItem(game,false);
                 if (it != null) {

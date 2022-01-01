@@ -62,9 +62,12 @@ public class Config {
 
     //Random chest
     public static boolean randomChest;
+    public static boolean randomChestNoExplosion;
     public static int randomChestInterval;
+    public static int randomChestMinContent;
     public static int randomChestMaxContent;
     public static int randomChestMaxHeight;
+    public static int randomChestBorderPadding;
 
     //World border
     public static boolean borderEnabled;
@@ -152,9 +155,12 @@ public class Config {
         itemframe_take = config.getBoolean("rollback.allow-itemframe-take");
 
         randomChest = config.getBoolean("random-chest.enabled");
+        randomChestNoExplosion = config.getBoolean("random-chest.no-explosion");
         randomChestInterval = config.getInt("random-chest.interval") * 20;
+        randomChestMinContent = config.getInt("random-chest.min-chestcontent");
         randomChestMaxContent = config.getInt("random-chest.max-chestcontent");
         randomChestMaxHeight = config.getInt("random-chest.max-height");
+        randomChestBorderPadding = config.getInt("random-chest.border-padding");
         teleportEnd = config.getBoolean("settings.teleport-at-end");
         teleportEndTime = config.getInt("settings.teleport-at-end-time");
 
